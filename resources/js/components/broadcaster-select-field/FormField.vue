@@ -1,15 +1,20 @@
 <template>
     <default-field :field="field" :errors="errors">
         <template slot="field">
-            <input
+            <select-control
                 :id="field.name"
                 :type="this.field.type"
-                class="w-full form-control form-input form-input-bordered"
+                v-model="value"
+                class="w-full form-control form-select"
                 :class="errorClasses"
-                :placeholder="field.name"
-                :value="value"
+                :options="field.options"
+                :disabled="isReadonly"
                 @input="setFieldAndMessage"
-            />
+            >
+                <option value="" selected :disabled="!field.nullable">{{
+                    __('Choose an option')
+                    }}</option>
+            </select-control>
         </template>
     </default-field>
 </template>
@@ -24,7 +29,9 @@ export default {
 
     methods: {
         setFieldAndMessage(el) {
-            const rawValue = el.target.value;
+            // const rawValue = el.target.value;
+            //console.log(el);
+            const rawValue = this.value;
             let parsedValue = rawValue;
 
             if (this.field.type === 'number') {

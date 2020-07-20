@@ -4,15 +4,17 @@ namespace Codebykyle\CalculatedField;
 
 use Laravel\Nova\Element;
 use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\Select;
 
-class BroadcasterField extends Field
+class BroadcasterSelectField extends Select
 {
+
     /**
      * The field's component.
      *
      * @var string
      */
-    public $component = 'broadcaster-field';
+    public $component = 'broadcaster-select-field';
 
     /**
      * The type of the field to show on the form
@@ -51,18 +53,6 @@ class BroadcasterField extends Field
     }
 
     /**
-     * Allows us to set the format of the number according to numeral.js
-     * @param $broadcastChannel
-     * @return Element
-     */
-    public function numberFormat($format) : Element
-    {
-        return $this->withMeta([
-            'numberFormat' => $format
-        ]);
-    }
-
-    /**
      * Tells the client side component which channel to broadcast on
      * @param array|string $broadcastChannel
      * @return Element
@@ -73,5 +63,4 @@ class BroadcasterField extends Field
             'broadcastTo' => $broadcastChannel
         ]);
     }
-
 }

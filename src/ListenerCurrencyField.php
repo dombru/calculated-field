@@ -3,16 +3,16 @@
 namespace Codebykyle\CalculatedField;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\Currency;
 
-class ListenerField extends Field
+class ListenerCurrencyField extends Currency
 {
     /**
      * The field's component.
      *
      * @var string
      */
-    public $component = 'listener-field';
+    public $component = 'listener-currency-field';
 
     /**
      * The event this fields listens for
@@ -44,19 +44,8 @@ class ListenerField extends Field
     }
 
     /**
-     * Allows us to set the format of the number according to numeral.js
-     * @param $broadcastChannel
-     */
-    public function numberFormat($format)
-    {
-        return $this->withMeta([
-            'numberFormat' => $format
-        ]);
-    }
-
-    /**
      * The channel that the client side component listens to
-     * @param string|array $channel
+     * @param $channel
      * @return $this
      */
     public function listensTo($channel) {
