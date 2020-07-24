@@ -24,93 +24,99 @@
 </template>
 
 <style lang="scss">
-  @-webkit-keyframes rotating {
-    from{
-      transform: rotate(0deg);
-    }
-    to{
-      transform: rotate(360deg);
-    }
+@-webkit-keyframes rotating {
+  from {
+    transform: rotate(0deg);
   }
-  .rotating {
-    animation: rotating 2s linear infinite;
+  to {
+    transform: rotate(360deg);
   }
+}
+.rotating {
+  animation: rotating 2s linear infinite;
+}
 </style>
 
 <script>
-import { FormField, HandlesValidationErrors } from 'laravel-nova'
-import _ from 'lodash'
+import { FormField, HandlesValidationErrors } from "laravel-nova";
+import _ from "lodash";
 
 export default {
   mixins: [FormField, HandlesValidationErrors],
 
-  props: ['resourceName', 'resourceId', 'field'],
+  props: ["resourceName", "resourceId", "field"],
 
   created() {
-    Nova.$on(this.field.listensTo, this.messageReceived)
+    Nova.$on(this.field.listensTo, this.messageReceived);
   },
 
   data: () => ({
     calculating: false,
-    field_values: {}
+    field_values: {},
   }),
 
   methods: {
     messageReceived(message) {
       this.field_values[message.field_name] = message.value;
-      this.calculateValue()
+      this.calculateValue();
     },
 
-    calculateValue: _.debounce(function () {
+    calculateValue: _.debounce(function() {
       this.calculating = true;
 
-      Nova.request().post(
-              `/codebykyle/calculated-field/calculate/${this.resourceName}/${this.field.attribute}`,
-              this.field_values
-      ).then((response) => {
-        this.value = response.data.value;
-        this.calculating = false;
-      }).catch(() => {
-        this.calculating = false;
-      });
+      Nova.request()
+        .post(
+          `/codebykyle/calculated-field/calculate/${this.resourceName}/${this.field.attribute}`,
+          {
+            values: this.field_values,
+            resource_id: this.resourceId,
+          }
+        )
+        .then((response) => {
+          this.value = response.data.value;
+          this.calculating = false;
+        })
+        .catch(() => {
+          this.calculating = false;
+        });
     }, 500),
 
     /*
      * Set the initial, internal value for the field.
      */
     setInitialValue() {
-      this.value = this.field.value || ''
+      this.value = this.field.value || "";
     },
 
     /**
      * Fill the given FormData object with the field's internal value.
      */
     fill(formData) {
-      formData.append(this.field.attribute, this.value || '')
+      formData.append(this.field.attribute, this.value || "");
     },
 
     /**
      * Update the field's internal value.
      */
     handleChange(value) {
-      this.value = value
+      this.value = value;
     },
   },
 
   computed: {
     defaultAttributes() {
       return {
-        type: 'number',
+        type: "number",
         min: this.field.min,
         max: this.field.max,
         step: this.field.step,
         pattern: this.field.pattern,
         placeholder: this.field.placeholder || this.field.name,
         class: this.errorClasses,
-      }
+      };
     },
     extraAttributes() {
-      const attrs = this.field.extraAttributes
+      const attrs = this.field.extraAttributes;
 
       return {
         // Leave the default attributes even though we can now specify
@@ -118,9 +124,8 @@ export default {
         // uses the old field attributes
         ...this.defaultAttributes,
         ...attrs,
-      }
+      };
     },
   },
-}
+};
 </script>
-

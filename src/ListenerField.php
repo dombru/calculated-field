@@ -39,6 +39,7 @@ class ListenerField extends Field
         $this->listensTo = 'broadcast-field-input';
 
         $this->calculateFunction = function ($values, Request $request) {
+
             return collect($values)->values()->sum();
         };
     }
@@ -50,7 +51,7 @@ class ListenerField extends Field
     public function numberFormat($format)
     {
         return $this->withMeta([
-            'numberFormat' => $format
+            'numberFormat' => $format,
         ]);
     }
 
@@ -59,7 +60,8 @@ class ListenerField extends Field
      * @param string|array $channel
      * @return $this
      */
-    public function listensTo($channel) {
+    public function listensTo($channel)
+    {
         $this->listensTo = $channel;
         return $this;
     }
@@ -70,7 +72,8 @@ class ListenerField extends Field
      * @param callable $calculateFunction
      * @return $this
      */
-    public function calculateWith(callable $calculateFunction) {
+    public function calculateWith(callable $calculateFunction)
+    {
         $this->calculateFunction = $calculateFunction;
         return $this;
     }
@@ -82,7 +85,7 @@ class ListenerField extends Field
     public function jsonSerialize()
     {
         return array_merge([
-            'listensTo' => $this->listensTo
+            'listensTo' => $this->listensTo,
         ], parent::jsonSerialize());
     }
 }

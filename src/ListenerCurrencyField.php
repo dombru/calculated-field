@@ -48,7 +48,8 @@ class ListenerCurrencyField extends Currency
      * @param $channel
      * @return $this
      */
-    public function listensTo($channel) {
+    public function listensTo($channel)
+    {
         $this->listensTo = $channel;
         return $this;
     }
@@ -59,7 +60,8 @@ class ListenerCurrencyField extends Currency
      * @param callable $calculateFunction
      * @return $this
      */
-    public function calculateWith(callable $calculateFunction) {
+    public function calculateWith(callable $calculateFunction)
+    {
         $this->calculateFunction = $calculateFunction;
         return $this;
     }
@@ -71,7 +73,7 @@ class ListenerCurrencyField extends Currency
     public function jsonSerialize()
     {
         return array_merge([
-            'listensTo' => $this->listensTo
+            'listensTo' => $this->listensTo,
         ], parent::jsonSerialize());
     }
 }

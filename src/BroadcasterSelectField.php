@@ -35,7 +35,7 @@ class BroadcasterSelectField extends Select
 
         $this->withMeta([
             'type' => 'number',
-            'broadcastTo' => 'broadcast-field-input'
+            'broadcastTo' => 'broadcast-field-input',
         ]);
     }
 
@@ -45,10 +45,10 @@ class BroadcasterSelectField extends Select
      * @param $type
      * @return Element
      */
-    public function setType($type) : Element
+    public function setType($type): Element
     {
         return $this->withMeta([
-            'type' => $type
+            'type' => $type,
         ]);
     }
 
@@ -57,10 +57,10 @@ class BroadcasterSelectField extends Select
      * @param array|string $broadcastChannel
      * @return Element
      */
-    public function broadcastTo($broadcastChannel) : Element
+    public function broadcastTo($broadcastChannel): Element
     {
         return $this->withMeta([
-            'broadcastTo' => $broadcastChannel
+            'broadcastTo' => $broadcastChannel,
         ]);
     }
 }

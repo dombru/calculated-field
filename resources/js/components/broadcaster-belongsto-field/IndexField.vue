@@ -1,26 +1,16 @@
-<!--<template>-->
-<!--    <span>{{ field.value }}</span>-->
-<!--</template>-->
-
-<!--<script>-->
-<!--export default {-->
-<!--    props: ['resourceName', 'field'],-->
-<!--}-->
-<!--</script>-->
-
 <template>
-    <div :class="`text-${field.textAlign}`">
+  <div :class="`text-${field.textAlign}`">
     <span>
       <span v-if="field.viewable && field.value">
         <router-link
-            :to="{
+          :to="{
             name: 'detail',
             params: {
               resourceName: field.resourceName,
               resourceId: field.belongsToId,
             },
           }"
-            class="no-underline dim text-primary font-bold"
+          class="no-underline dim text-primary font-bold"
         >
           {{ field.value }}
         </router-link>
@@ -28,11 +18,11 @@
       <span v-else-if="field.value">{{ field.value }}</span>
       <span v-else>&mdash;</span>
     </span>
-    </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        props: ['resourceName', 'field'],
-    }
+export default {
+  props: ["resourceName", "field"],
+};
 </script>
