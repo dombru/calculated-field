@@ -97,6 +97,8 @@ export default {
         .post(
           `/codebykyle/calculated-field/calculate/${this.resourceName}/${this.field.attribute}`,
           {
+            editing: true,
+            editMode: this.editMode,
             values: this.field_values,
             resourceId: this.field_values["resourceId"],
           }
@@ -139,5 +141,16 @@ export default {
       return numeral(number).format(format);
     },
   },
+  computed: {
+    editMode() {
+      if(this.$route.name === 'edit') {
+        return 'update'
+      }
+      if(this.$route.name === 'edit-attached') {
+        return 'update-attached'
+      }
+      return this.$route.name
+    }
+  }
 };
 </script>

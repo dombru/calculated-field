@@ -23,7 +23,7 @@ class CalculatedFieldController extends Controller
         $calculatedValue = call_user_func(
             $field->calculateFunction,
             collect($request->json()->all()['values']),
-            $request,
+            $request
         );
 
         return response()->json([

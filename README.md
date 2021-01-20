@@ -1,3 +1,10 @@
+# **Package has been forked**
+- support for Nova resource functions:
+  - fieldsForCreate 
+  - fieldsForUpdate
+
+original readme below. (not up to date with current changes)
+
 # **Package has been forken**
 - Added select-field from a fork from: [Sabid](https://github.com/sabid/calculated-field)
 - Added a belongsTo broadcast field
@@ -18,7 +25,7 @@ https://codebykyle.com/blog/laravel-nova-custom-calculated-field
 
 Install the package via composer:
 
-`composer require codebykyle/calculated-field`
+`composer require dombru/calculated-field`
 
 
 ### Example
