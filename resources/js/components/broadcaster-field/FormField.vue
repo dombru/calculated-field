@@ -8,6 +8,7 @@
                 :class="errorClasses"
                 :placeholder="field.name"
                 :value="value"
+                v-bind="extraAttributes"
                 @input="setFieldAndMessage"
             />
         </template>
@@ -34,7 +35,7 @@ export default {
             Nova.$emit(this.field.broadcastTo, {
                 'field_name': this.field.attribute,
                 'value': parsedValue
-            }),
+            })
 
             this.value = parsedValue;
         },
@@ -44,6 +45,11 @@ export default {
          */
         setInitialValue() {
             this.value = this.field.value || ''
+            Nova.$emit(this.field.broadcastTo, {
+              'field_name': this.field.attribute,
+              'value': (this.field.type === 'number') ? Number(this.value): this.value,
+              'init': true,
+            })
         },
 
         /**
@@ -60,5 +66,29 @@ export default {
             this.value = value
         },
     },
+    computed: {
+      defaultAttributes() {
+        return {
+          type: this.field.type,
+          min: this.field.min,
+          max: this.field.max,
+          step: this.field.step,
+          pattern: this.field.pattern,
+          placeholder: this.field.placeholder || this.field.name,
+          class: this.errorClasses,
+        };
+      },
+      extraAttributes() {
+        const attrs = this.field.extraAttributes;
+
+        return {
+          // Leave the default attributes even though we can now specify
+          // whatever attributes we like because the old number field still
+          // uses the old field attributes
+          ...this.defaultAttributes,
+          ...attrs,
+        };
+      },
+    }
 }
 </script>

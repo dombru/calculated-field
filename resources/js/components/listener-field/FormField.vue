@@ -60,7 +60,7 @@ export default {
 
   created() {
     Nova.$on(this.field.listensTo, this.messageReceived);
-    this.field_values["resourceId"] = parseInt(this.resourceId);
+    //this.field_values["resourceId"] = parseInt(this.resourceId);
   },
 
   data: () => ({
@@ -71,7 +71,9 @@ export default {
   methods: {
     messageReceived(message) {
       this.field_values[message.field_name] = message.value;
-      this.calculateValue();
+      if(!message.init) {
+        this.calculateValue();
+      }
     },
 
     setFieldAndMessage(el) {
@@ -100,7 +102,7 @@ export default {
             editing: true,
             editMode: this.editMode,
             values: this.field_values,
-            resourceId: this.field_values["resourceId"],
+            resourceId: this.resourceId,
           }
         )
         .then((response) => {
