@@ -58,7 +58,9 @@ export default {
   methods: {
     messageReceived(message) {
       this.field_values[message.field_name] = message.value;
-      this.calculateValue();
+      if(!message.init) {
+        this.calculateValue();
+      }
     },
 
     calculateValue: _.debounce(function() {
@@ -71,7 +73,7 @@ export default {
             editing: true,
             editMode: this.editMode,
             values: this.field_values,
-            resource_id: this.resourceId,
+            resourceId: this.resourceId,
           }
         )
         .then((response) => {

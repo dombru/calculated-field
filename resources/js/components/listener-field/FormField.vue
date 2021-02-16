@@ -9,7 +9,6 @@
           :class="errorClasses"
           :placeholder="field.name"
           :value="value | moneyFormat(field.numberFormat)"
-          @input="setFieldAndMessage"
         />
 
         <div
@@ -60,7 +59,6 @@ export default {
 
   created() {
     Nova.$on(this.field.listensTo, this.messageReceived);
-    //this.field_values["resourceId"] = parseInt(this.resourceId);
   },
 
   data: () => ({
@@ -74,22 +72,6 @@ export default {
       if(!message.init) {
         this.calculateValue();
       }
-    },
-
-    setFieldAndMessage(el) {
-      const rawValue = el.target.value;
-      let parsedValue = rawValue;
-
-      if (this.field.type === "number") {
-        parsedValue = Number(rawValue);
-      }
-
-      Nova.$emit(this.field.broadcastTo, {
-        field_name: this.field.attribute,
-        value: parsedValue,
-      });
-
-      this.value = parsedValue;
     },
 
     calculateValue: _.debounce(function() {
